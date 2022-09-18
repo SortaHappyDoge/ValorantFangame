@@ -8,6 +8,9 @@ public class playerMove : MonoBehaviour
     [SerializeField] float groundDrag;
     [SerializeField] float speed = 9;
     [SerializeField] float maxSpeed = 10;
+    [SerializeField] float airSpeed = 3;
+    [SerializeField] float normalSpeed = 6;
+
     bool isGrounded;
     float moveForward;
     float moveRight;
@@ -27,21 +30,30 @@ public class playerMove : MonoBehaviour
     {
         isGrounded = groundCheck.isGrounded;
         
-        
+        if(isGrounded == false)
+        {
+            speed = airSpeed;
+        }
+        else
+        {
+            speed = normalSpeed;
+        }
 
         if(isGrounded == true)
         {
             playerRB.drag = groundDrag;
-            playerRB.AddRelativeForce(moveRight, 0, moveForward);
-            if (playerRB.velocity.magnitude > maxSpeed)
-            {
-                playerRB.velocity = Vector3.ClampMagnitude(playerRB.velocity, maxSpeed);
-            }
         }
         else
         {
             playerRB.drag = 0;
         }
+
+        playerRB.AddRelativeForce(moveRight, 0, moveForward);
+        if (playerRB.velocity.magnitude > maxSpeed && isGrounded == true)
+        {
+            playerRB.velocity = Vector3.ClampMagnitude(playerRB.velocity, maxSpeed);
+        }
+
         Debug.Log(playerRB.velocity.magnitude);
     }
 }
