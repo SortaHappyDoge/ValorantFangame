@@ -42,5 +42,6 @@ public class playerMove : MonoBehaviour
         {
             playerRB.drag = 0;
         }
+        Debug.Log(playerRB.velocity.magnitude);
     }
 }
