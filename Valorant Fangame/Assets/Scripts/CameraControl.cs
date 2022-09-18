@@ -8,6 +8,7 @@ public class CameraControl : MonoBehaviour
     public float mouseSens = 10f;
     float mouseX;
     float mouseY;
+    float mouseXz;
     float xRotation;
     void Start()
     {
@@ -19,11 +20,16 @@ public class CameraControl : MonoBehaviour
     {
         mouseX += Input.GetAxisRaw("Mouse X") * mouseSens;
         mouseY = Input.GetAxisRaw("Mouse Y") * mouseSens;
+        mouseXz = Input.GetAxisRaw("Mouse X") * mouseSens;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90, 90);
-        playerCamera.rotation = Quaternion.Euler(xRotation, mouseX, playerCamera.rotation.z);
+        playerCamera.rotation = Quaternion.Euler(xRotation, mouseX, 0);
 
-        playerBody.Rotate(Vector3.up * mouseX);
+        playerBody.Rotate(0, mouseXz, 0);
     }
+    /*void FixedUpdate()
+    {
+        
+    }*/
 }
